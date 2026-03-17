@@ -1,4 +1,5 @@
 import streamlit as st
+import random
 
 # Configuration de la page
 st.set_page_config(page_title="Quiz Histoire de l'IA", page_icon="🧠")
@@ -85,23 +86,42 @@ st.write("Testez vos connaissances sur l'histoire de l'intelligence artificielle
 # Initialisation des variables de session (pour garder le score en mémoire)
 if 'score' not in st.session_state:
     st.session_state.score = 0
+if 'xp' not in st.session_state:
+    st.session_state.xp = 0
 if 'question_index' not in st.session_state:
     st.session_state.question_index = 0
 if 'quiz_termine' not in st.session_state:
     st.session_state.quiz_termine = False
+if 'questions_melangees' not in st.session_state:
+    st.session_state.questions_melangees = {
+        niveau_key: random.sample(questions_data[niveau_key], len(questions_data[niveau_key]))
+        for niveau_key in questions_data
+    }
 
 # Sélection du niveau
 niveau = st.sidebar.selectbox("Choisissez votre niveau :", ["Facile", "Intermédiaire", "Difficile"])
+xp_par_niveau = {
+    "Facile": 10,
+    "Intermédiaire": 20,
+    "Difficile": 30
+}
+
+st.sidebar.metric("XP total", st.session_state.xp)
 
 # Réinitialiser si on change de niveau
 if st.sidebar.button("Réinitialiser le Quiz"):
     st.session_state.score = 0
+    st.session_state.xp = 0
     st.session_state.question_index = 0
     st.session_state.quiz_termine = False
+    st.session_state.questions_melangees = {
+        niveau_key: random.sample(questions_data[niveau_key], len(questions_data[niveau_key]))
+        for niveau_key in questions_data
+    }
     st.rerun()
 
 # Affichage du Quiz
-questions = questions_data[niveau]
+questions = st.session_state.questions_melangees[niveau]
 
 if not st.session_state.quiz_termine:
     q_actuelle = questions[st.session_state.question_index]
@@ -116,8 +136,10 @@ if not st.session_state.quiz_termine:
         
         if submit:
             if reponse == q_actuelle["r"]:
-                st.success(f"✅ Bonne réponse ! {q_actuelle['ex']}")
+                xp_gagne = xp_par_niveau[niveau]
+                st.success(f"✅ Bonne réponse ! +{xp_gagne} XP. {q_actuelle['ex']}")
                 st.session_state.score += 1
+                st.session_state.xp += xp_gagne
             else:
                 st.error(f"❌ Mauvaise réponse. La réponse était : {q_actuelle['r']}. {q_actuelle['ex']}")
 
@@ -136,9 +158,15 @@ else:
     st.balloons()
     st.header("🏆 Quiz Terminé !")
     st.metric("Votre Score Final", f"{st.session_state.score} / {len(questions)}")
+    st.metric("XP total gagné", st.session_state.xp)
     
     if st.button("Rejouer"):
         st.session_state.score = 0
+        st.session_state.xp = 0
         st.session_state.question_index = 0
         st.session_state.quiz_termine = False
+        st.session_state.questions_melangees = {
+            niveau_key: random.sample(questions_data[niveau_key], len(questions_data[niveau_key]))
+            for niveau_key in questions_data
+        }
         st.rerun()
