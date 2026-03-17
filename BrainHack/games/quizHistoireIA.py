@@ -120,14 +120,17 @@ if not st.session_state.quiz_termine:
                 st.session_state.score += 1
             else:
                 st.error(f"❌ Mauvaise réponse. La réponse était : {q_actuelle['r']}. {q_actuelle['ex']}")
-            
-            # Passer à la question suivante
-            if st.session_state.question_index < len(questions) - 1:
-                st.session_state.question_index += 1
-                st.button("Question suivante ➡️")
-            else:
+
+    # --- LE BOUTON SUIVANT DOIT ÊTRE ICI (HORS DU FORMULAIRE) ---
+    if st.session_state.question_index < len(questions) - 1:
+        if st.button("Question suivante ➡️"):
+            st.session_state.question_index += 1
+            st.rerun()
+    else:
+        if not st.session_state.quiz_termine:
+            if st.button("Voir le résultat final 🏆"):
                 st.session_state.quiz_termine = True
-                st.button("Voir le résultat final 🏆")
+                st.rerun()
 
 else:
     st.balloons()
