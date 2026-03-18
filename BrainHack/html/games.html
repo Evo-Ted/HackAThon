@@ -1,248 +1,345 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nos mini-jeux - BrainHack</title>
-    <link rel="stylesheet" href="/BrainHack/css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-
-     <!-- Navigation -->
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
     <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">
-                <div class="logo-icon">
-                    <img src="/BrainHack/assets/logo.png" alt="Logo BrainHack" class="logo-img">
-                </div>
-            </a>
-            
-            <div class="nav-links">
-                <a href="#histoire" class="nav-link">Histoire</a>
-                <a href="games/" class="nav-link">Mini-jeux</a>
-            </div>
-            
-            <a href="#" class="btn btn-primary">
-                <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
-                </svg>
-                Mon compte
-            </a>
-            
-            <button class="mobile-menu-btn" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+      <div class="nav-container">
+        <a href="#" class="logo">
+          <div class="logo-icon">
+            <img
+              src="../assets/logo.png"
+              alt="Logo BrainHack"
+              class="logo-img"
+            />
+          </div>
+        </a>
+
+        <div class="nav-links">
+          <a href="#histoire" class="nav-link">Histoire</a>
+          <a href="games.html" class="nav-link">Mini-jeux</a>
         </div>
+
+        <a href="#" class="btn btn-primary">
+          <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor">
+            <path
+              fill-rule="evenodd"
+              d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          Mon compte
+        </a>
+
+        <button class="mobile-menu-btn" aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </nav>
 
     <!-- Hero Section Mini-jeux -->
     <section class="hero hero-games">
-        <div class="hero-bg">
-            <!-- Manette de jeu en arrière-plan -->
-            <svg class="gamepad-bg" viewBox="0 0 400 250" preserveAspectRatio="xMidYMid meet">
-                <defs>
-                    <linearGradient id="gamepadGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#a855f7;stop-opacity:0.2" />
-                        <stop offset="100%" style="stop-color:#6366f1;stop-opacity:0.1" />
-                    </linearGradient>
-                </defs>
-                <!-- Corps de la manette -->
-                <path d="M80 120 C80 80 120 60 160 60 L240 60 C280 60 320 80 320 120 L320 180 C320 220 280 240 240 240 L160 240 C120 240 80 220 80 180 Z" 
-                      fill="none" stroke="url(#gamepadGrad)" stroke-width="3"/>
-                <!-- Boutons gauche -->
-                <circle cx="130" cy="140" r="15" fill="none" stroke="url(#gamepadGrad)" stroke-width="2"/>
-                <circle cx="110" cy="160" r="15" fill="none" stroke="url(#gamepadGrad)" stroke-width="2"/>
-                <circle cx="150" cy="160" r="15" fill="none" stroke="url(#gamepadGrad)" stroke-width="2"/>
-                <circle cx="130" cy="180" r="15" fill="none" stroke="url(#gamepadGrad)" stroke-width="2"/>
-                <!-- Boutons droite -->
-                <circle cx="270" cy="150" r="12" fill="none" stroke="url(#gamepadGrad)" stroke-width="2"/>
-                <circle cx="300" cy="130" r="12" fill="none" stroke="url(#gamepadGrad)" stroke-width="2"/>
-                <circle cx="300" cy="170" r="12" fill="none" stroke="url(#gamepadGrad)" stroke-width="2"/>
-                <!-- Joysticks -->
-                <circle cx="140" cy="130" r="8" fill="url(#gamepadGrad)"/>
-                <circle cx="260" cy="190" r="8" fill="url(#gamepadGrad)"/>
-            </svg>
-        </div>
-        <div class="container">
-            <h1 class="hero-title">Nos mini-jeux</h1>
-        </div>
+      <div class="hero-bg">
+        <!-- Manette de jeu en arrière-plan -->
+        <svg
+          class="gamepad-bg"
+          viewBox="0 0 400 250"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <defs>
+            <linearGradient
+              id="gamepadGrad"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="100%"
+            >
+              <stop
+                offset="0%"
+                style="stop-color: #a855f7; stop-opacity: 0.2"
+              />
+              <stop
+                offset="100%"
+                style="stop-color: #6366f1; stop-opacity: 0.1"
+              />
+            </linearGradient>
+          </defs>
+          <!-- Corps de la manette -->
+          <path
+            d="M80 120 C80 80 120 60 160 60 L240 60 C280 60 320 80 320 120 L320 180 C320 220 280 240 240 240 L160 240 C120 240 80 220 80 180 Z"
+            fill="none"
+            stroke="url(#gamepadGrad)"
+            stroke-width="3"
+          />
+          <!-- Boutons gauche -->
+          <circle
+            cx="130"
+            cy="140"
+            r="15"
+            fill="none"
+            stroke="url(#gamepadGrad)"
+            stroke-width="2"
+          />
+          <circle
+            cx="110"
+            cy="160"
+            r="15"
+            fill="none"
+            stroke="url(#gamepadGrad)"
+            stroke-width="2"
+          />
+          <circle
+            cx="150"
+            cy="160"
+            r="15"
+            fill="none"
+            stroke="url(#gamepadGrad)"
+            stroke-width="2"
+          />
+          <circle
+            cx="130"
+            cy="180"
+            r="15"
+            fill="none"
+            stroke="url(#gamepadGrad)"
+            stroke-width="2"
+          />
+          <!-- Boutons droite -->
+          <circle
+            cx="270"
+            cy="150"
+            r="12"
+            fill="none"
+            stroke="url(#gamepadGrad)"
+            stroke-width="2"
+          />
+          <circle
+            cx="300"
+            cy="130"
+            r="12"
+            fill="none"
+            stroke="url(#gamepadGrad)"
+            stroke-width="2"
+          />
+          <circle
+            cx="300"
+            cy="170"
+            r="12"
+            fill="none"
+            stroke="url(#gamepadGrad)"
+            stroke-width="2"
+          />
+          <!-- Joysticks -->
+          <circle cx="140" cy="130" r="8" fill="url(#gamepadGrad)" />
+          <circle cx="260" cy="190" r="8" fill="url(#gamepadGrad)" />
+        </svg>
+      </div>
+      <div class="container">
+        <h1 class="hero-title">Nos mini-jeux</h1>
+      </div>
     </section>
 
     <!-- Section Jeux -->
     <section class="games-section">
-        <div class="container">
-            
-            <!-- Jeu 1 : Différenciation d'images -->
-            <div class="game-card">
-                <p class="game-subtitle">Différenciation entre les images générées ou non ?</p>
-                <div class="game-preview image-quiz-preview">
-                    <div class="quiz-header">
-                        <button class="close-btn">×</button>
-                        <h3>Différenciation entre les images générées ou non</h3>
-                        <div class="timer">30</div>
-                    </div>
-                    <div class="quiz-image-container">
-                        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=400&fit=crop" alt="Rue à différencier">
-                        <div class="quiz-overlay">
-                            <div class="progress-bar">
-                                <div class="progress-fill"></div>
-                                <span>00:01</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="quiz-buttons">
-                        <button class="quiz-btn btn-ai">Générée par l'IA</button>
-                        <button class="quiz-btn btn-real">Photographie réelle</button>
-                    </div>
-                </div>
+      <div class="container">
+        <!-- Jeu 1 : Différenciation d'images -->
+        <div class="game-card">
+          <p class="game-subtitle">
+            Différenciation entre les images générées ou non ?
+          </p>
+          <div class="game-preview image-quiz-preview">
+            <div class="quiz-header">
+              <button class="close-btn">×</button>
+              <h3>Différenciation entre les images générées ou non</h3>
+              <div class="timer">30</div>
             </div>
-
-            <!-- Jeu 2 : Timeline Histoire IA -->
-            <div class="game-card">
-                <p class="game-subtitle">L'histoire de l'intelligence artificielle</p>
-                <div class="game-preview timeline-preview">
-                    <h3 class="timeline-title">L'histoire de l'intelligence artificielle</h3>
-                    <div class="timeline-container">
-                        <div class="timeline-line"></div>
-                        
-                        <!-- Points de la timeline -->
-                        <div class="timeline-point" style="left: 5%; top: 20%;">
-                            <div class="point-icon">🤖</div>
-                            <span class="point-year">1950</span>
-                        </div>
-                        
-                        <div class="timeline-point" style="left: 15%; top: 60%;">
-                            <div class="point-icon">💻</div>
-                            <span class="point-year">1960</span>
-                        </div>
-                        
-                        <div class="timeline-point" style="left: 30%; top: 30%;">
-                            <div class="point-icon">🧠</div>
-                            <span class="point-year">1970</span>
-                        </div>
-                        
-                        <div class="timeline-point" style="left: 45%; top: 70%;">
-                            <div class="point-icon">📱</div>
-                            <span class="point-year">1980</span>
-                        </div>
-                        
-                        <div class="timeline-point" style="left: 60%; top: 25%;">
-                            <div class="point-icon">🌐</div>
-                            <span class="point-year">1990</span>
-                        </div>
-                        
-                        <div class="timeline-point" style="left: 75%; top: 65%;">
-                            <div class="point-icon">🎯</div>
-                            <span class="point-year">2000</span>
-                        </div>
-                        
-                        <div class="timeline-point" style="left: 90%; top: 40%;">
-                            <div class="point-icon">⚡</div>
-                            <span class="point-year">2020</span>
-                        </div>
-                    </div>
+            <div class="quiz-image-container">
+              <img
+                src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=400&fit=crop"
+                alt="Rue à différencier"
+              />
+              <div class="quiz-overlay">
+                <div class="progress-bar">
+                  <div class="progress-fill"></div>
+                  <span>00:01</span>
                 </div>
+              </div>
             </div>
-
-            <!-- Jeu 3 : Ball Blast -->
-            <div class="game-card">
-                <p class="game-subtitle">Ball Blast ludique</p>
-                <div class="game-preview ball-blast-preview">
-                    <div class="game-header">
-                        <div class="score">Score: 1540</div>
-                        <div class="game-title">BALL BLAST</div>
-                        <button class="pause-btn">❚❚</button>
-                    </div>
-                    <div class="game-area">
-                        <!-- Balles -->
-                        <div class="ball ball-red" style="left: 20%; top: 30%;">
-                            <span>AI</span>
-                            <span class="ball-sub">Paris</span>
-                        </div>
-                        <div class="ball ball-blue" style="left: 60%; top: 20%;">
-                            <span>6</span>
-                            <span class="ball-sub">London</span>
-                        </div>
-                        <div class="ball ball-yellow" style="left: 40%; top: 15%;">
-                            <span class="ball-bonus">+</span>
-                        </div>
-                        <div class="ball ball-orange" style="left: 75%; top: 35%;">
-                            <span>?</span>
-                        </div>
-                        
-                        <!-- Canon -->
-                        <div class="cannon">
-                            <div class="cannon-barrel"></div>
-                            <div class="cannon-base"></div>
-                        </div>
-                        
-                        <!-- Projectiles -->
-                        <div class="projectile" style="left: 48%; bottom: 80px;"></div>
-                        <div class="projectile" style="left: 52%; bottom: 120px;"></div>
-                    </div>
-                    <div class="ground"></div>
-                </div>
+            <div class="quiz-buttons">
+              <button class="quiz-btn btn-ai">Générée par l'IA</button>
+              <button class="quiz-btn btn-real">Photographie réelle</button>
             </div>
-
+          </div>
         </div>
+
+        <!-- Jeu 2 : Timeline Histoire IA -->
+        <div class="game-card">
+          <p class="game-subtitle">L'histoire de l'intelligence artificielle</p>
+          <div class="game-preview timeline-preview">
+            <h3 class="timeline-title">
+              L'histoire de l'intelligence artificielle
+            </h3>
+            <div class="timeline-container">
+              <div class="timeline-line"></div>
+
+              <!-- Points de la timeline -->
+              <div class="timeline-point" style="left: 5%; top: 20%">
+                <div class="point-icon">🤖</div>
+                <span class="point-year">1950</span>
+              </div>
+
+              <div class="timeline-point" style="left: 15%; top: 60%">
+                <div class="point-icon">💻</div>
+                <span class="point-year">1960</span>
+              </div>
+
+              <div class="timeline-point" style="left: 30%; top: 30%">
+                <div class="point-icon">🧠</div>
+                <span class="point-year">1970</span>
+              </div>
+
+              <div class="timeline-point" style="left: 45%; top: 70%">
+                <div class="point-icon">📱</div>
+                <span class="point-year">1980</span>
+              </div>
+
+              <div class="timeline-point" style="left: 60%; top: 25%">
+                <div class="point-icon">🌐</div>
+                <span class="point-year">1990</span>
+              </div>
+
+              <div class="timeline-point" style="left: 75%; top: 65%">
+                <div class="point-icon">🎯</div>
+                <span class="point-year">2000</span>
+              </div>
+
+              <div class="timeline-point" style="left: 90%; top: 40%">
+                <div class="point-icon">⚡</div>
+                <span class="point-year">2020</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Jeu 3 : Ball Blast -->
+        <div class="game-card">
+          <p class="game-subtitle">Ball Blast ludique</p>
+          <div class="game-preview ball-blast-preview">
+            <div class="game-header">
+              <div class="score">Score: 1540</div>
+              <div class="game-title">BALL BLAST</div>
+              <button class="pause-btn">❚❚</button>
+            </div>
+            <div class="game-area">
+              <!-- Balles -->
+              <div class="ball ball-red" style="left: 20%; top: 30%">
+                <span>AI</span>
+                <span class="ball-sub">Paris</span>
+              </div>
+              <div class="ball ball-blue" style="left: 60%; top: 20%">
+                <span>6</span>
+                <span class="ball-sub">London</span>
+              </div>
+              <div class="ball ball-yellow" style="left: 40%; top: 15%">
+                <span class="ball-bonus">+</span>
+              </div>
+              <div class="ball ball-orange" style="left: 75%; top: 35%">
+                <span>?</span>
+              </div>
+
+              <!-- Canon -->
+              <div class="cannon">
+                <div class="cannon-barrel"></div>
+                <div class="cannon-base"></div>
+              </div>
+
+              <!-- Projectiles -->
+              <div class="projectile" style="left: 48%; bottom: 80px"></div>
+              <div class="projectile" style="left: 52%; bottom: 120px"></div>
+            </div>
+            <div class="ground"></div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-wave">
-            <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-                <path d="M0,64 C480,150 960,-20 1440,64 L1440,120 L0,120 Z" fill="#a8c6fa"/>
-            </svg>
-        </div>
-        <div class="footer-content">
-            <div class="container">
-                <div class="footer-grid">
-                    <div class="footer-brand">
-                        <a href="#" class="logo">
-                            <div class="logo-icon">
-                                <img src="/BrainHack/assets/logo.png" alt="Logo BrainHack" class="logo-img">
-                            </div>
-                        </a>
-                    </div>
-                    
-                    <div class="footer-links">
-                        <h4>Navigation</h4>
-                        <ul>
-                            <li><a href="#">Histoire</a></li>
-                            <li><a href="games/">Mini-jeux</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div class="footer-links">
-                        <h4>Contact Us</h4>
-                        <ul>
-                            <li><a href="mailto:contact@brainhack.fr">contact@brainhack.fr</a></li>
-                            <li><a href="tel:+33123456789">+33 1 23 45 67 89</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div class="footer-social">
-                        <h4>Suivez-nous</h4>
-                        <div class="social-links">
-                            <a href="#" aria-label="Facebook">
-                                <svg class="social-icon"><use href="#icon-facebook"></use></svg>
-                            </a>
-                            <a href="#" aria-label="Instagram">
-                                <svg class="social-icon"><use href="#icon-instagram"></use></svg>
-                            </a>
-                        </div>
-                    </div>
+      <div class="footer-wave">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path
+            d="M0,64 C480,150 960,-20 1440,64 L1440,120 L0,120 Z"
+            fill="#a8c6fa"
+          />
+        </svg>
+      </div>
+      <div class="footer-content">
+        <div class="container">
+          <div class="footer-grid">
+            <div class="footer-brand">
+              <a href="#" class="logo">
+                <div class="logo-icon">
+                  <img
+                    src="../assets/logo.png"
+                    alt="Logo BrainHack"
+                    class="logo-img"
+                  />
                 </div>
+              </a>
             </div>
+
+            <div class="footer-links">
+              <h4>Navigation</h4>
+              <ul>
+                <li><a href="#">Histoire</a></li>
+                <li><a href="games.html">Mini-jeux</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-links">
+              <h4>Contact Us</h4>
+              <ul>
+                <li>
+                  <a href="mailto:contact@brainhack.fr">contact@brainhack.fr</a>
+                </li>
+                <li><a href="tel:+33123456789">+33 1 23 45 67 89</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-social">
+              <h4>Suivez-nous</h4>
+              <div class="social-links">
+                <a href="#" aria-label="Facebook">
+                  <svg class="social-icon">
+                    <use href="#icon-facebook"></use>
+                  </svg>
+                </a>
+                <a href="#" aria-label="Instagram">
+                  <svg class="social-icon">
+                    <use href="#icon-instagram"></use>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </footer>
 
-    <script src="/BrainHack/js/script.js"></script>
-    <script src="/BrainHack/js/games.js"></script>
-</body>
+    <script src="../js/script.js"></script>
+    <script src="../js/games.js"></script>
+  </body>
 </html>

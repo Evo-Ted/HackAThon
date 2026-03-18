@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BrainHack - Ton Certificat</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+      /* --- STYLE DE LA PAGE --- */
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #1e272e; /* Fond sombre tech */
+        color: #d2dae2;
+        text-align: center;
+        padding: 50px 50px 90px;
+      }
+
+      h1 {
+        color: #0fb9b1;
+      } /* Vert néon */
+
+      /* --- STYLE DU FORMULAIRE --- */
+      .formulaire {
+        background-color: #2d3436;
+        padding: 30px;
+        border-radius: 10px;
+        display: inline-block;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+        margin-bottom: 30px;
+      }
+
+      input {
+        padding: 12px;
+        margin: 10px;
+        border-radius: 5px;
+        border: 1px solid #0fb9b1;
+        background-color: #1e272e;
+        color: white;
+        font-size: 16px;
+      }
+
+      .btn-action {
+        padding: 12px 25px;
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+        background-color: #0fb9b1;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .btn-action:hover {
+        background-color: #0a8f88;
+        transform: scale(1.05);
+      }
+
+      #bouton-pdf {
+        display: none;
+        margin: 28px auto 0;
+        background-color: #e84118;
+      }
+
+      /* --- STYLE DU DIPLÔME (POUR LE PDF) --- */
+      #zone-certificat {
+        display: none; /* Caché au début */
+        margin: 0 auto;
+        margin-top: 20px;
+        width: 100%;
+        max-width: 100%;
+        overflow: visible;
+        text-align: center;
+      }
+
+      .certificat-design {
+        background-color: #ffffff;
+        color: #2f3640;
+        width: 262mm;
+        min-height: 178mm;
+        margin: 0 auto;
+        padding: 5mm;
+        border: 4mm solid #2f3640;
+        box-sizing: border-box;
+        display: flex;
+        align-items: stretch;
+        overflow: visible;
+        transform-origin: top center;
+      }
+
+      .certificat-design.export-pdf {
+        padding: 0;
+      }
+
+      .bordure-interieure {
+        border: 1.5mm double #0fb9b1;
+        padding: 9mm 11mm;
+        position: relative;
+        width: 100%;
+        min-height: 100%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        gap: 4mm;
+        overflow: visible;
+      }
+
+      .certificat-corps {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        flex: 1;
+      }
+
+      .certificat-footer {
+        width: 100%;
+        margin-top: 5mm;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+      }
+
+      .titre-certif {
+        font-size: 12.5mm;
+        color: #2f3640;
+        margin: 0 0 2mm;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .sous-titre {
+        font-size: 6.2mm;
+        color: #7f8fa6;
+        margin-bottom: 4mm;
+      }
+
+      .texte-intro {
+        font-size: 4.6mm;
+        margin: 2.5mm 0 0;
+      }
+
+      .nom-joueur {
+        font-size: 10.5mm;
+        color: #0fb9b1;
+        font-weight: bold;
+        margin: 3mm 0;
+        text-transform: uppercase;
+      }
+
+      .texte-felicitations {
+        font-size: 4.8mm;
+        line-height: 1.35;
+        margin: 4mm 0;
+      }
+
+      .score-box {
+        background-color: #2f3640;
+        color: #f5f6fa;
+        display: inline-block;
+        padding: 3mm 10mm;
+        border-radius: 999px;
+        font-size: 5.8mm;
+        font-weight: bold;
+        border: 0.8mm solid #0fb9b1;
+      }
+
+      .logo-brainhack {
+        font-size: 4.8mm;
+        font-weight: bold;
+        color: #0fb9b1;
+        margin-top: 0;
+        text-align: right;
+        border-top: 0.6mm solid #7f8fa6;
+        padding-top: 2mm;
+        width: 60mm;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="formulaire-section" class="formulaire">
+      <h1>Opération BrainHack Terminée !</h1>
+      <p>Récupère ton accréditation officielle :</p>
+      <input type="text" id="input-prenom" placeholder="Prénom" />
+      <input type="text" id="input-nom" placeholder="Nom" />
+      <br />
+      <button class="btn-action" onclick="preparerDiplome()">
+        Générer ma certification 🎓
+      </button>
+    </div>
+
+    <div id="zone-certificat">
+      <div id="contenu-a-imprimer" class="certificat-design">
+        <div class="bordure-interieure">
+          <div class="certificat-corps">
+            <h1 class="titre-certif">Certification d'Expert</h1>
+            <div class="sous-titre">Enquêteur Anti-IA Niveau 1</div>
+
+            <p class="texte-intro">Ce document certifie officiellement que :</p>
+            <div id="affichage-nom" class="nom-joueur">PRÉNOM NOM</div>
+
+            <p class="texte-felicitations">
+              A brillamment terminé toutes les épreuves de l'opération
+              <strong>BrainHack</strong>.<br />
+              Il/Elle a su faire preuve d'un esprit critique exceptionnel pour
+              déjouer<br />
+              les pièges visuels et textuels des Intelligences Artificielles
+              génératives.
+            </p>
+
+            <div class="score-box">
+              SCORE : <span id="affichage-xp">0</span> XP
+            </div>
+          </div>
+
+          <div class="certificat-footer">
+            <div class="logo-brainhack">// Projet BrainHack</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button id="bouton-pdf" class="btn-action" onclick="telechargerPDF()">
+      📥 Télécharger en PDF
+    </button>
+
+    <script>
+      function mettreAJourApercuCertificat() {
+        const zone = document.getElementById("zone-certificat");
+        const certificat = document.getElementById("contenu-a-imprimer");
+
+        if (!zone || !certificat || zone.style.display === "none") {
+          return;
+        }
+
+        certificat.style.transform = "scale(1)";
+
+        const largeurDisponible = Math.max(window.innerWidth - 40, 320);
+        const largeurCertificat = certificat.offsetWidth;
+        const hauteurCertificat = certificat.offsetHeight;
+        const echelle = Math.min(1, largeurDisponible / largeurCertificat);
+
+        certificat.style.transform = `scale(${echelle})`;
+        zone.style.height = `${hauteurCertificat * echelle}px`;
+      }
+
+      function preparerDiplome() {
+        // On récupère ce que le joueur a tapé
+        const prenom = document.getElementById("input-prenom").value.trim();
+        const nom = document.getElementById("input-nom").value.trim();
+
+        if (prenom === "" || nom === "") {
+          alert(
+            "Erreur système : Identité requise ! N'oublie pas ton nom et prénom.",
+          );
+          return;
+        }
+
+        // --- ASTUCE POUR L'XP ---
+        // Le code cherche s'il y a un score sauvegardé par les autres jeux.
+        // Si tu n'as pas encore codé les autres jeux, ça met 1500 par défaut pour tester !
+        let scoreTotal = localStorage.getItem("brainhack_score");
+        if (!scoreTotal) {
+          scoreTotal = 1500;
+        }
+
+        // On injecte les infos dans le diplôme
+        document.getElementById("affichage-nom").innerText = prenom + " " + nom;
+        document.getElementById("affichage-xp").innerText = scoreTotal;
+
+        // On cache le formulaire et on montre le diplôme et le bouton de téléchargement
+        document.getElementById("formulaire-section").style.display = "none";
+        document.getElementById("zone-certificat").style.display = "block";
+        document.getElementById("bouton-pdf").style.display = "block";
+
+        mettreAJourApercuCertificat();
+      }
+
+      async function telechargerPDF() {
+        const zone = document.getElementById("zone-certificat");
+        const element = document.getElementById("contenu-a-imprimer");
+        const boutonPdf = document.getElementById("bouton-pdf");
+        const prenom = document
+          .getElementById("input-prenom")
+          .value.toUpperCase()
+          .replace(/\s+/g, "_");
+        const nom = document
+          .getElementById("input-nom")
+          .value.toUpperCase()
+          .replace(/\s+/g, "_");
+        const nomFichier = `BrainHack_Certification_${prenom}_${nom}.pdf`;
+
+        if (!window.html2pdf) {
+          alert(
+            "Le module PDF n'est pas chargé. Recharge la page puis réessaie.",
+          );
+          return;
+        }
+
+        const ancienneTransformation = element.style.transform;
+        const ancienneHauteurZone = zone.style.height;
+        const ancienTexteBouton = boutonPdf.innerText;
+        element.style.transform = "scale(1)";
+        element.classList.add("export-pdf");
+        zone.style.height = "auto";
+        boutonPdf.disabled = true;
+        boutonPdf.innerText = "⏳ Génération du PDF...";
+
+        try {
+          await window
+            .html2pdf()
+            .set({
+              margin: 0,
+              filename: nomFichier,
+              image: { type: "jpeg", quality: 1 },
+              html2canvas: {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: "#ffffff",
+                width: 1122,
+                height: 793,
+              },
+              jsPDF: {
+                orientation: "landscape",
+                unit: "mm",
+                format: "a4",
+              },
+              pagebreak: { mode: ["avoid-all"] },
+            })
+            .from(element)
+            .save();
+        } catch (error) {
+          alert(
+            "Erreur pendant la génération du PDF. Recharge la page puis réessaie.",
+          );
+        } finally {
+          element.style.transform = ancienneTransformation;
+          element.classList.remove("export-pdf");
+          zone.style.height = ancienneHauteurZone;
+          boutonPdf.disabled = false;
+          boutonPdf.innerText = ancienTexteBouton;
+          mettreAJourApercuCertificat();
+        }
+      }
+
+      window.addEventListener("resize", mettreAJourApercuCertificat);
+    </script>
+  </body>
+</html>
