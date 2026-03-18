@@ -1,355 +1,188 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BrainHack - Ton Certificat</title>
-    <link rel="icon" type="image/png" href="../assets/logo.png" />
-
+    <link rel="stylesheet" href="/BrainHack/css/style.css">
+    <link rel="stylesheet" href="/BrainHack/css/certificat.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
-    <style>
-      /* --- STYLE DE LA PAGE --- */
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #1e272e; /* Fond sombre tech */
-        color: #d2dae2;
-        text-align: center;
-        padding: 50px 50px 90px;
-      }
-
-      h1 {
-        color: #0fb9b1;
-      } /* Vert néon */
-
-      /* --- STYLE DU FORMULAIRE --- */
-      .formulaire {
-        background-color: #2d3436;
-        padding: 30px;
-        border-radius: 10px;
-        display: inline-block;
-        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
-        margin-bottom: 30px;
-      }
-
-      input {
-        padding: 12px;
-        margin: 10px;
-        border-radius: 5px;
-        border: 1px solid #0fb9b1;
-        background-color: #1e272e;
-        color: white;
-        font-size: 16px;
-      }
-
-      .btn-action {
-        padding: 12px 25px;
-        font-size: 18px;
-        font-weight: bold;
-        color: white;
-        background-color: #0fb9b1;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: 0.3s;
-      }
-
-      .btn-action:hover {
-        background-color: #0a8f88;
-        transform: scale(1.05);
-      }
-
-      #bouton-pdf {
-        display: none;
-        margin: 28px auto 0;
-        background-color: #e84118;
-      }
-
-      /* --- STYLE DU DIPLÔME (POUR LE PDF) --- */
-      #zone-certificat {
-        display: none; /* Caché au début */
-        margin: 0 auto;
-        margin-top: 20px;
-        width: 100%;
-        max-width: 100%;
-        overflow: visible;
-        text-align: center;
-      }
-
-      .certificat-design {
-        background-color: #ffffff;
-        color: #2f3640;
-        width: 262mm;
-        min-height: 178mm;
-        margin: 0 auto;
-        padding: 5mm;
-        border: 4mm solid #2f3640;
-        box-sizing: border-box;
-        display: flex;
-        align-items: stretch;
-        overflow: visible;
-        transform-origin: top center;
-      }
-
-      .certificat-design.export-pdf {
-        padding: 0;
-      }
-
-      .bordure-interieure {
-        border: 1.5mm double #0fb9b1;
-        padding: 9mm 11mm;
-        position: relative;
-        width: 100%;
-        min-height: 100%;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        gap: 4mm;
-        overflow: visible;
-      }
-
-      .certificat-corps {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        flex: 1;
-      }
-
-      .certificat-footer {
-        width: 100%;
-        margin-top: 5mm;
-        display: flex;
-        justify-content: flex-end;
-        align-items: flex-end;
-      }
-
-      .titre-certif {
-        font-size: 12.5mm;
-        color: #2f3640;
-        margin: 0 0 2mm;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-
-      .sous-titre {
-        font-size: 6.2mm;
-        color: #7f8fa6;
-        margin-bottom: 4mm;
-      }
-
-      .texte-intro {
-        font-size: 4.6mm;
-        margin: 2.5mm 0 0;
-      }
-
-      .nom-joueur {
-        font-size: 10.5mm;
-        color: #0fb9b1;
-        font-weight: bold;
-        margin: 3mm 0;
-        text-transform: uppercase;
-      }
-
-      .texte-felicitations {
-        font-size: 4.8mm;
-        line-height: 1.35;
-        margin: 4mm 0;
-      }
-
-      .score-box {
-        background-color: #2f3640;
-        color: #f5f6fa;
-        display: inline-block;
-        padding: 3mm 10mm;
-        border-radius: 999px;
-        font-size: 5.8mm;
-        font-weight: bold;
-        border: 0.8mm solid #0fb9b1;
-      }
-
-      .logo-brainhack {
-        font-size: 4.8mm;
-        font-weight: bold;
-        color: #0fb9b1;
-        margin-top: 0;
-        text-align: right;
-        border-top: 0.6mm solid #7f8fa6;
-        padding-top: 2mm;
-        width: 60mm;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="formulaire-section" class="formulaire">
-      <h1>Opération BrainHack Terminée !</h1>
-      <p>Récupère ton accréditation officielle :</p>
-      <input type="text" id="input-prenom" placeholder="Prénom" />
-      <input type="text" id="input-nom" placeholder="Nom" />
-      <br />
-      <button class="btn-action" onclick="preparerDiplome()">
-        Générer ma certification 🎓
-      </button>
+</head>
+<body>
+    <div class="page-bg">
+        <img src="/BrainHack/assets/cerveauTest.png" alt="" class="bg-circuit">
     </div>
 
-    <div id="zone-certificat">
-      <div id="contenu-a-imprimer" class="certificat-design">
-        <div class="bordure-interieure">
-          <div class="certificat-corps">
-            <h1 class="titre-certif">Certification d'Expert</h1>
-            <div class="sous-titre">Enquêteur Anti-IA Niveau 1</div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/BrainHack/html/index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="/BrainHack/assets/logo.png" alt="Logo BrainHack" class="logo-img">
+                </div>
+            </a>
 
-            <p class="texte-intro">Ce document certifie officiellement que :</p>
-            <div id="affichage-nom" class="nom-joueur">PRÉNOM NOM</div>
-
-            <p class="texte-felicitations">
-              A brillamment terminé toutes les épreuves de l'opération
-              <strong>BrainHack</strong>.<br />
-              Il/Elle a su faire preuve d'un esprit critique exceptionnel pour
-              déjouer<br />
-              les pièges visuels et textuels des Intelligences Artificielles
-              génératives.
-            </p>
-
-            <div class="score-box">
-              SCORE : <span id="affichage-xp">0</span> XP
+            <div class="nav-links">
+                <a href="/BrainHack/html/index.html" class="nav-link">Accueil</a>
+                <a href="/BrainHack/html/index.html#histoire" class="nav-link">Histoire</a>
+                <a href="/BrainHack/html/games.html" class="nav-link">Mini-jeux</a>
+                <a href="/BrainHack/html/certification.html" class="nav-link">Certification</a>
+                <a href="/BrainHack/html/apropos.html" class="nav-link">À propos</a>
             </div>
-          </div>
 
-          <div class="certificat-footer">
-            <div class="logo-brainhack">// Projet BrainHack</div>
-          </div>
+            <div class="nav-actions">
+                <a href="/BrainHack/html/authentification.html" class="btn btn-outline-nav">
+                    Connexion
+                </a>
+                <a href="/BrainHack/html/authentification.html" class="btn btn-primary">
+                    <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                    </svg>
+                    S'inscrire
+                </a>
+            </div>
+
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
-      </div>
-    </div>
+    </nav>
 
-    <button id="bouton-pdf" class="btn-action" onclick="telechargerPDF()">
-      📥 Télécharger en PDF
-    </button>
+    <!-- Contenu principal -->
+    <main class="certif-page">
 
-    <script>
-      function mettreAJourApercuCertificat() {
-        const zone = document.getElementById("zone-certificat");
-        const certificat = document.getElementById("contenu-a-imprimer");
+        <!-- Formulaire -->
+        <div id="formulaire-section" class="certif-formulaire">
+            <h1 class="certif-main-title">Opération BrainHack Terminée !</h1>
+            <p class="certif-subtitle">Récupère ton accréditation officielle :</p>
+            <div class="certif-inputs">
+                <input type="text" id="input-prenom" class="form-input" placeholder="Prénom" />
+                <input type="text" id="input-nom" class="form-input" placeholder="Nom" />
+            </div>
+            <button class="btn btn-primary btn-full" onclick="preparerDiplome()">
+                Générer ma certification 🎓
+            </button>
+        </div>
 
-        if (!zone || !certificat || zone.style.display === "none") {
-          return;
-        }
+        <!-- Zone certificat -->
+        <div id="zone-certificat">
+            <div id="contenu-a-imprimer" class="certificat-design">
+                <div class="bordure-interieure">
+                    <div class="certificat-corps">
+                        <h1 class="titre-certif">Certification d'Expert</h1>
+                        <div class="sous-titre">Enquêteur Anti-IA Niveau 1</div>
+                        <p class="texte-intro">Ce document certifie officiellement que :</p>
+                        <div id="affichage-nom" class="nom-joueur">PRÉNOM NOM</div>
+                        <p class="texte-felicitations">
+                            A brillamment terminé toutes les épreuves de l'opération
+                            <strong>BrainHack</strong>.<br/>
+                            Il/Elle a su faire preuve d'un esprit critique exceptionnel pour déjouer<br/>
+                            les pièges visuels et textuels des Intelligences Artificielles génératives.
+                        </p>
+                        <div class="score-box">
+                            SCORE : <span id="affichage-xp">0</span> XP
+                        </div>
+                    </div>
+                    <div class="certificat-footer">
+                        <div class="logo-brainhack">// Projet BrainHack</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        certificat.style.transform = "scale(1)";
+        <button id="bouton-pdf" class="btn btn-primary" onclick="telechargerPDF()">
+            📥 Télécharger en PDF
+        </button>
 
-        const largeurDisponible = Math.max(window.innerWidth - 40, 320);
-        const largeurCertificat = certificat.offsetWidth;
-        const hauteurCertificat = certificat.offsetHeight;
-        const echelle = Math.min(1, largeurDisponible / largeurCertificat);
+    </main>
 
-        certificat.style.transform = `scale(${echelle})`;
-        zone.style.height = `${hauteurCertificat * echelle}px`;
-      }
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-wave">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                <path d="M0,64 C480,150 960,-20 1440,64 L1440,120 L0,120 Z" fill="#a8c6fa"/>
+            </svg>
+        </div>
+        <div class="footer-content">
+            <div class="container">
+                <div class="footer-grid">
 
-      function preparerDiplome() {
-        // On récupère ce que le joueur a tapé
-        const prenom = document.getElementById("input-prenom").value.trim();
-        const nom = document.getElementById("input-nom").value.trim();
+                    <!-- Brand -->
+                    <div class="footer-brand">
+                        <a href="/BrainHack/html/index.html" class="logo">
+                            <div class="logo-icon">
+                                <img src="/BrainHack/assets/logo.png" alt="Logo BrainHack" class="logo-img">
+                            </div>
+                        </a>
+                    </div>
 
-        if (prenom === "" || nom === "") {
-          alert(
-            "Erreur système : Identité requise ! N'oublie pas ton nom et prénom.",
-          );
-          return;
-        }
+                    <!-- Navigation -->
+                    <div class="footer-links">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="/BrainHack/html/index.html">Accueil</a></li>
+                            <li><a href="/BrainHack/html/index.html#histoire">Histoire</a></li>
+                            <li><a href="/BrainHack/html/games.html">Mini-jeux</a></li>
+                            <li><a href="/BrainHack/html/certification.html">Certification</a></li>
+                            <li><a href="/BrainHack/html/apropos.html">À propos</a></li>
+                        </ul>
+                    </div>
 
-        // --- ASTUCE POUR L'XP ---
-        // Le code cherche s'il y a un score sauvegardé par les autres jeux.
-        // Si tu n'as pas encore codé les autres jeux, ça met 1500 par défaut pour tester !
-        let scoreTotal = localStorage.getItem("brainhack_score");
-        if (!scoreTotal) {
-          scoreTotal = 1500;
-        }
+                    <!-- Contact -->
+                    <div class="footer-links">
+                        <h4>Contact</h4>
+                        <ul>
+                            <li><a href="mailto:contact@brainhack.fr">contact@brainhack.fr</a></li>
+                            <li><a href="tel:+33123456789">+33 1 23 45 67 89</a></li>
+                            <li><a href="/BrainHack/html/apropos.html">Qui sommes-nous ?</a></li>
+                            <li><a href="/BrainHack/html/mentions-legales.html">Mentions légales</a></li>
+                        </ul>
+                    </div>
 
-        // On injecte les infos dans le diplôme
-        document.getElementById("affichage-nom").innerText = prenom + " " + nom;
-        document.getElementById("affichage-xp").innerText = scoreTotal;
+                    <!-- Newsletter + Réseaux -->
+                    <div class="footer-newsletter">
+                        <h4>Newsletter</h4>
+                        <p class="newsletter-desc">Reçois les dernières actus sur l'IA !</p>
+                        <div class="newsletter-form">
+                            <input type="email" class="newsletter-input" placeholder="Ton email...">
+                            <button class="btn btn-primary newsletter-btn">OK</button>
+                        </div>
+                        <h4 style="margin-top: 25px;">Suivez-nous</h4>
+                        <div class="social-links">
+                            <a href="#" aria-label="Facebook">
+                                <svg viewBox="0 0 24 24" fill="currentColor" class="social-icon">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                </svg>
+                            </a>
+                            <a href="#" aria-label="Instagram">
+                                <svg viewBox="0 0 24 24" fill="currentColor" class="social-icon">
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
 
-        // On cache le formulaire et on montre le diplôme et le bouton de téléchargement
-        document.getElementById("formulaire-section").style.display = "none";
-        document.getElementById("zone-certificat").style.display = "block";
-        document.getElementById("bouton-pdf").style.display = "block";
+                </div>
 
-        mettreAJourApercuCertificat();
-      }
+                <!-- Bas du footer -->
+                <div class="footer-bottom">
+                    <p class="footer-copyright">© 2026 BrainHack. Tous droits réservés.</p>
+                    <div class="footer-legal">
+                        <a href="/BrainHack/html/mentions-legales.html">Mentions légales</a>
+                        <a href="/BrainHack/html/mentions-legales.html">CGU</a>
+                        <a href="/BrainHack/html/mentions-legales.html">Politique de confidentialité</a>
+                    </div>
+                </div>
 
-      async function telechargerPDF() {
-        const zone = document.getElementById("zone-certificat");
-        const element = document.getElementById("contenu-a-imprimer");
-        const boutonPdf = document.getElementById("bouton-pdf");
-        const prenom = document
-          .getElementById("input-prenom")
-          .value.toUpperCase()
-          .replace(/\s+/g, "_");
-        const nom = document
-          .getElementById("input-nom")
-          .value.toUpperCase()
-          .replace(/\s+/g, "_");
-        const nomFichier = `BrainHack_Certification_${prenom}_${nom}.pdf`;
+            </div>
+        </div>
+    </footer>
 
-        if (!window.html2pdf) {
-          alert(
-            "Le module PDF n'est pas chargé. Recharge la page puis réessaie.",
-          );
-          return;
-        }
-
-        const ancienneTransformation = element.style.transform;
-        const ancienneHauteurZone = zone.style.height;
-        const ancienTexteBouton = boutonPdf.innerText;
-        element.style.transform = "scale(1)";
-        element.classList.add("export-pdf");
-        zone.style.height = "auto";
-        boutonPdf.disabled = true;
-        boutonPdf.innerText = "⏳ Génération du PDF...";
-
-        try {
-          await window
-            .html2pdf()
-            .set({
-              margin: 0,
-              filename: nomFichier,
-              image: { type: "jpeg", quality: 1 },
-              html2canvas: {
-                scale: 2,
-                useCORS: true,
-                backgroundColor: "#ffffff",
-                width: 1122,
-                height: 793,
-              },
-              jsPDF: {
-                orientation: "landscape",
-                unit: "mm",
-                format: "a4",
-              },
-              pagebreak: { mode: ["avoid-all"] },
-            })
-            .from(element)
-            .save();
-        } catch (error) {
-          alert(
-            "Erreur pendant la génération du PDF. Recharge la page puis réessaie.",
-          );
-        } finally {
-          element.style.transform = ancienneTransformation;
-          element.classList.remove("export-pdf");
-          zone.style.height = ancienneHauteurZone;
-          boutonPdf.disabled = false;
-          boutonPdf.innerText = ancienTexteBouton;
-          mettreAJourApercuCertificat();
-        }
-      }
-
-      window.addEventListener("resize", mettreAJourApercuCertificat);
-    </script>
-  </body>
+    <script src="/BrainHack/js/certificat.js"></script>
+</body>
 </html>
