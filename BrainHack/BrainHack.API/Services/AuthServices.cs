@@ -20,7 +20,9 @@ namespace BrainHack.API.Services
 
         public async Task<AuthResponseDTO?> Register(RegisterDTO dto)
         {
-            // Vérifier si l'email existe déjà
+
+            if (dto.Role.ToLower() == "eleve") dto.Role = "Etudiant";
+
             var existing = await _supabase
                 .From<User>()
                 .Where(u => u.Email == dto.Email)
@@ -29,13 +31,14 @@ namespace BrainHack.API.Services
             if (existing.Models.Any())
                 return null;
 
-            // Hasher le mot de passe
-            var passwordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
+            var authResponse = await _supabase.Auth.SignUp(dto.Email, dto.Password);
+            if (authResponse == null || authResponse.User == null)
+                return null;
 
             // Créer l'utilisateur avec un UUID
             var user = new User
             {
-                IdCompte = Guid.NewGuid().ToString(),
+                IdCompte = authResponse.User.Id,
                 Pseudo = dto.Pseudo,
                 Email = dto.Email,
                 Role = dto.Role,
@@ -43,11 +46,12 @@ namespace BrainHack.API.Services
             };
 
             var response = await _supabase.From<User>().Insert(user);
+            if (!response.Models.Any()) return null;
             var created = response.Models.First();
 
             return new AuthResponseDTO
             {
-                Token = GenerateToken(created),
+                Token = authResponse.AccessToken,
                 IdCompte = created.IdCompte,
                 Pseudo = created.Pseudo,
                 Email = created.Email,
@@ -58,10 +62,16 @@ namespace BrainHack.API.Services
 
         public async Task<AuthResponseDTO?> Login(LoginDTO dto)
         {
+            var authResponse = await _supabase.Auth.SignIn(dto.Email, dto.Password);
+
+            if (authResponse == null || authResponse.User == null)
+                return null;
+
             var response = await _supabase
                 .From<User>()
-                .Where(u => u.Email == dto.Email)
+                .Where(u => u.IdCompte == authResponse.User.Id)
                 .Get();
+
 
             var user = response.Models.FirstOrDefault();
             if (user == null)
@@ -69,7 +79,7 @@ namespace BrainHack.API.Services
 
             return new AuthResponseDTO
             {
-                Token = GenerateToken(user),
+                Token = authResponse.AccessToken ?? "",
                 IdCompte = user.IdCompte,
                 Pseudo = user.Pseudo,
                 Email = user.Email,

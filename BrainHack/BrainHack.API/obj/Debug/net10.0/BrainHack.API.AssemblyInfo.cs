@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BrainHack.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7904465c9da1fb3b0bd117c4973139ab9fefdc9e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fdd7ed779fcf06008eef859154102dc09dc9142b")]
 [assembly: System.Reflection.AssemblyProductAttribute("BrainHack.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BrainHack.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

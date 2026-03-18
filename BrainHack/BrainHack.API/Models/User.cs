@@ -12,13 +12,13 @@ namespace BrainHack.API.Models
         [Column("pseudo")]
         public string Pseudo { get; set; } = string.Empty;
 
-        [Column("e-mail")]
+        [Column("email")]
         public string Email { get; set; } = string.Empty;
 
-        [Column("rôle")]
-        public string Role { get; set; } = "eleve";
+        [Column("role")]
+        public string Role { get; set; } = "Etudiant";
 
-        [Column("URL de l'avatar")]
+        [Column("avatar_url")]
         public string AvatarUrl { get; set; } = string.Empty;
     }
 }
