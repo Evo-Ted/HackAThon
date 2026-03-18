@@ -1,17 +1,20 @@
 <!doctype html>
 <html lang="fr">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>À propos - BrainHack</title>
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <div class="page-bg">
-        <img src="../assets/cerveauTest.png" alt="" class="bg-circuit" />
+      <img src="../assets/cerveauTest.png" alt="" class="bg-circuit" />
     </div>
 
     <!-- Navigation -->
@@ -28,14 +31,17 @@
         </a>
         <div class="nav-links">
           <a href="index.html" class="nav-link">Accueil</a>
-          <a href="index.html#histoire" class="nav-link">Histoire</a>
           <a href="games.html" class="nav-link">Mini-jeux</a>
-          <a href="certification.html" class="nav-link">Certification</a>
+          <a href="../api%20ia/api-ia-bouton.html" class="nav-link"
+            >Vérifier une image</a
+          >
           <a href="Apropos.html" class="nav-link active">À propos</a>
         </div>
         <div class="nav-actions">
-          <a href="authentification.html" class="btn-outline-nav">Connexion</a>
-          <a href="authentification.html" class="btn btn-primary">
+          <a href="authentification.html?mode=login" class="btn-outline-nav"
+            >Connexion</a
+          >
+          <a href="authentification.html?mode=register" class="btn btn-primary">
             <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor">
               <path
                 fill-rule="evenodd"
@@ -55,118 +61,172 @@
     </nav>
 
     <main>
+      <!-- Hero -->
+      <section class="apropos-hero">
+        <div class="container">
+          <div class="apropos-hero-content">
+            <h1 class="apropos-title">Qui sommes-nous ?</h1>
+            <p class="apropos-subtitle">
+              Une équipe de passionnés qui croit que comprendre l'IA, c'est le
+              premier pas pour ne pas se laisser manipuler par elle.
+            </p>
+          </div>
+        </div>
+      </section>
 
-        <!-- Hero -->
-        <section class="apropos-hero">
-            <div class="container">
-                <div class="apropos-hero-content">
-                    <h1 class="apropos-title">Qui sommes-nous ?</h1>
-                    <p class="apropos-subtitle">Une équipe de passionnés qui croit que comprendre l'IA, c'est le premier pas pour ne pas se laisser manipuler par elle.</p>
-                </div>
+      <!-- Présentation -->
+      <section class="apropos-section">
+        <div class="container">
+          <div class="apropos-project">
+            <div class="apropos-project-text">
+              <h2 class="section-title">Le projet BrainHack</h2>
+              <p>
+                BrainHack est née d'un constat simple : l'intelligence
+                artificielle est partout, mais personne ne nous apprend vraiment
+                à la décrypter.
+              </p>
+              <p>
+                Alors on a créé BrainHack. Une plateforme qui rend l'IA
+                accessible, compréhensible et qui t'apprend à développer ton
+                esprit critique face à ces nouvelles technologies.
+              </p>
+              <p>
+                À travers des articles, des mini-jeux et des certifications, on
+                te donne les clés pour naviguer dans un monde où l'IA redéfinit
+                les règles.
+              </p>
             </div>
-        </section>
-
-        <!-- Présentation -->
-        <section class="apropos-section">
-            <div class="container">
-                <div class="apropos-project">
-                    <div class="apropos-project-text">
-                        <h2 class="section-title">Le projet BrainHack</h2>
-                        <p>BrainHack est née d'un constat simple : l'intelligence artificielle est partout, mais personne ne nous apprend vraiment à la décrypter.</p>
-                        <p>Alors on a créé BrainHack. Une plateforme qui rend l'IA accessible, compréhensible et qui t'apprend à développer ton esprit critique face à ces nouvelles technologies.</p>
-                        <p>À travers des articles, des mini-jeux et des certifications, on te donne les clés pour naviguer dans un monde où l'IA redéfinit les règles.</p>
-                    </div>
-                    <div class="apropos-project-stats">
-                        <div class="stat-card">
-                            <span class="stat-number">9+</span>
-                            <span class="stat-label">Articles publiés</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-number">3</span>
-                            <span class="stat-label">Mini-jeux</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-number">100%</span>
-                            <span class="stat-label">Gratuit</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="apropos-project-stats">
+              <div class="stat-card">
+                <span class="stat-number">9+</span>
+                <span class="stat-label">Articles publiés</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-number">3</span>
+                <span class="stat-label">Mini-jeux</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-number">100%</span>
+                <span class="stat-label">Gratuit</span>
+              </div>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
 
-        <!-- Valeurs -->
-        <section class="apropos-section apropos-mission">
-            <div class="container">
-                <h2 class="section-title text-center">Nos valeurs</h2>
-                <div class="valeurs-grid">
-                    <div class="valeur-card">
-                        <div class="valeur-icon">🧠</div>
-                        <h3>Éduquer</h3>
-                        <p>Rendre l'IA compréhensible pour tous, sans jargon technique inutile.</p>
-                    </div>
-                    <div class="valeur-card">
-                        <div class="valeur-icon">🔍</div>
-                        <h3>Éveiller</h3>
-                        <p>Développer l'esprit critique face aux contenus générés par l'IA.</p>
-                    </div>
-                    <div class="valeur-card">
-                        <div class="valeur-icon">🎮</div>
-                        <h3>Engager</h3>
-                        <p>Apprendre en s'amusant grâce aux mini-jeux et défis.</p>
-                    </div>
-                    <div class="valeur-card">
-                        <div class="valeur-icon">🌍</div>
-                        <h3>Partager</h3>
-                        <p>Une communauté ouverte où chacun progresse à son rythme.</p>
-                    </div>
-                </div>
+      <!-- Valeurs -->
+      <section class="apropos-section apropos-mission">
+        <div class="container">
+          <h2 class="section-title text-center">Nos valeurs</h2>
+          <div class="valeurs-grid">
+            <div class="valeur-card">
+              <div class="valeur-icon">🧠</div>
+              <h3>Éduquer</h3>
+              <p>
+                Rendre l'IA compréhensible pour tous, sans jargon technique
+                inutile.
+              </p>
             </div>
-        </section>
-
-        <!-- Équipe -->
-        <section class="apropos-section">
-            <div class="container">
-                <h2 class="section-title text-center">L'équipe</h2>
-                <p class="section-subtitle text-center">Des étudiants passionnés par la tech et la pédagogie.</p>
-                <div class="equipe-grid">
-                    <div class="membre-card">
-                        <div class="membre-photo">
-                            <img src="../assets/cap1.png" alt="BARRAUD TEDDY" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                        </div>
-                        <h3 class="membre-nom">BARRAUD TEDDY</h3>
-                        <span class="membre-role">Chef de Projet</span>
-                        <p class="membre-bio">Maitrise de Unity et du jeu video</p>
-                    </div>
-                    <div class="membre-card">
-                        <div class="membre-photo">
-                            <img src="../assets/femme.png" alt="KELVYA ALANDJI" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                            <div class="membre-avatar-fallback">?</div>
-                        </div>
-                        <h3 class="membre-nom">KELVYA ALANDJI</h3>
-                        <span class="membre-role">Développeur Front-end</span>
-                        <p class="membre-bio">Passionné par le design et l'expérience utilisateur.</p>
-                    </div>
-                    <div class="membre-card">
-                        <div class="membre-photo">
-                            <img src="../assets/cap2.png" alt="POISSON LUDWIG" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-
-                        </div>
-                        <h3 class="membre-nom">POISSON LUDWIG</h3>
-                        <span class="membre-role">Architecte réseau</span>
-                        <p class="membre-bio">Maitrise le déploiement et la gestion des serveurs.</p>
-                    </div>
-                    <div class="membre-card">
-                        <div class="membre-photo">
-                            <img src="../assets/cap3.png" alt="GIRRARD TIMEO" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                        </div>
-                        <h3 class="membre-nom">GIRRARD TIMEO</h3>
-                        <span class="membre-role">Développeur Back-end</span>
-                        <p class="membre-bio">Spécialisé dans les architectures logicielles et la gestion de bases de données.</p>
-                    </div>
-                </div>
+            <div class="valeur-card">
+              <div class="valeur-icon">🔍</div>
+              <h3>Éveiller</h3>
+              <p>
+                Développer l'esprit critique face aux contenus générés par l'IA.
+              </p>
             </div>
-        </section>
+            <div class="valeur-card">
+              <div class="valeur-icon">🎮</div>
+              <h3>Engager</h3>
+              <p>Apprendre en s'amusant grâce aux mini-jeux et défis.</p>
+            </div>
+            <div class="valeur-card">
+              <div class="valeur-icon">🌍</div>
+              <h3>Partager</h3>
+              <p>Une communauté ouverte où chacun progresse à son rythme.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
+      <!-- Équipe -->
+      <section class="apropos-section">
+        <div class="container">
+          <h2 class="section-title text-center">L'équipe</h2>
+          <p class="section-subtitle text-center">
+            Des étudiants passionnés par la tech et la pédagogie.
+          </p>
+          <div class="equipe-grid">
+            <div class="membre-card">
+              <div class="membre-photo">
+                <img
+                  src="../assets/cap1.png"
+                  alt="BARRAUD TEDDY"
+                  onerror="
+                    this.style.display = 'none';
+                    this.nextElementSibling.style.display = 'flex';
+                  "
+                />
+              </div>
+              <h3 class="membre-nom">BARRAUD TEDDY</h3>
+              <span class="membre-role">Chef de Projet</span>
+              <p class="membre-bio">Maitrise de Unity et du jeu video</p>
+            </div>
+            <div class="membre-card">
+              <div class="membre-photo">
+                <img
+                  src="../assets/femme.png"
+                  alt="KELVYA ALANDJI"
+                  onerror="
+                    this.style.display = 'none';
+                    this.nextElementSibling.style.display = 'flex';
+                  "
+                />
+                <div class="membre-avatar-fallback">?</div>
+              </div>
+              <h3 class="membre-nom">KELVYA ALANDJI</h3>
+              <span class="membre-role">Développeur Front-end</span>
+              <p class="membre-bio">
+                Passionné par le design et l'expérience utilisateur.
+              </p>
+            </div>
+            <div class="membre-card">
+              <div class="membre-photo">
+                <img
+                  src="../assets/cap2.png"
+                  alt="POISSON LUDWIG"
+                  onerror="
+                    this.style.display = 'none';
+                    this.nextElementSibling.style.display = 'flex';
+                  "
+                />
+              </div>
+              <h3 class="membre-nom">POISSON LUDWIG</h3>
+              <span class="membre-role">Architecte réseau</span>
+              <p class="membre-bio">
+                Maitrise le déploiement et la gestion des serveurs.
+              </p>
+            </div>
+            <div class="membre-card">
+              <div class="membre-photo">
+                <img
+                  src="../assets/cap3.png"
+                  alt="GIRRARD TIMEO"
+                  onerror="
+                    this.style.display = 'none';
+                    this.nextElementSibling.style.display = 'flex';
+                  "
+                />
+              </div>
+              <h3 class="membre-nom">GIRRARD TIMEO</h3>
+              <span class="membre-role">Développeur Back-end</span>
+              <p class="membre-bio">
+                Spécialisé dans les architectures logicielles et la gestion de
+                bases de données.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <!-- Footer -->
@@ -269,5 +329,5 @@
 
     <script src="../js/script.js"></script>
     <script src="../js/Apropos.js"></script>
-</body>
+  </body>
 </html>
