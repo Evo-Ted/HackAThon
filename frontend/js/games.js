@@ -453,39 +453,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const aiHistoryCard = document.getElementById('ai-history-card');
     const ballBlastCard = document.getElementById('ball-blast-card');
     const ballBlastSubtitle = document.getElementById('ball-blast-subtitle');
-    const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     const classInfo = getStudentClassInfo();
     const settings = normalizeGameSettings(classInfo?.gameSettings || null);
-
-    const realVsAiUrl = isLocalHost ? settings.realVsAi.localUrl : settings.realVsAi.hostedUrl;
-    const aiHistoryUrl = isLocalHost ? settings.aiHistory.localUrl : settings.aiHistory.hostedUrl;
-
-    const setupCardRedirect = function (cardElement, destinationUrl, options) {
-        if (!cardElement) return;
-
-        cardElement.style.cursor = 'pointer';
-        cardElement.setAttribute('role', 'button');
-        cardElement.setAttribute('tabindex', '0');
-
-        const openPythonGame = function () {
-            window.open(destinationUrl, '_blank', 'noopener,noreferrer');
-        };
-
-        cardElement.addEventListener('click', function (event) {
-            if (options && options.ignoreButtonClicks && event.target.closest('button')) return;
-            openPythonGame();
-        });
-
-        cardElement.addEventListener('keydown', function (event) {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                openPythonGame();
-            }
-        });
-    };
-
-    setupCardRedirect(realVsAiCard, realVsAiUrl, { ignoreButtonClicks: true });
-    setupCardRedirect(aiHistoryCard, aiHistoryUrl, { ignoreButtonClicks: false });
 
     if (!settings.realVsAi.enabled && realVsAiCard) {
         realVsAiCard.classList.add('game-card-disabled');
@@ -508,13 +477,11 @@ function normalizeGameSettings(rawSettings) {
     const defaults = {
         realVsAi: {
             enabled: true,
-            localUrl: 'http://localhost:8501',
-            hostedUrl: 'https://brainhack-jeu.azurewebsites.net'
+            localUrl: 'http://localhost:8501'
         },
         aiHistory: {
             enabled: true,
-            localUrl: 'http://localhost:8502',
-            hostedUrl: 'https://brainhack-quizhistoireia.azurewebsites.net'
+            localUrl: 'http://localhost:8502'
         },
         ballBlast: {
             enabled: true,
@@ -526,13 +493,11 @@ function normalizeGameSettings(rawSettings) {
     return {
         realVsAi: {
             enabled: settings.realVsAi?.enabled !== false,
-            localUrl: settings.realVsAi?.localUrl || defaults.realVsAi.localUrl,
-            hostedUrl: settings.realVsAi?.hostedUrl || defaults.realVsAi.hostedUrl
+            localUrl: settings.realVsAi?.localUrl || defaults.realVsAi.localUrl
         },
         aiHistory: {
             enabled: settings.aiHistory?.enabled !== false,
-            localUrl: settings.aiHistory?.localUrl || defaults.aiHistory.localUrl,
-            hostedUrl: settings.aiHistory?.hostedUrl || defaults.aiHistory.hostedUrl
+            localUrl: settings.aiHistory?.localUrl || defaults.aiHistory.localUrl
         },
         ballBlast: {
             enabled: settings.ballBlast?.enabled !== false,
