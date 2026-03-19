@@ -18,8 +18,7 @@ namespace BrainHack.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDTO dto)
         {
-            if (string.IsNullOrWhiteSpace(dto.FirstName)
-                || string.IsNullOrWhiteSpace(dto.LastName)
+            if (string.IsNullOrWhiteSpace(dto.Pseudo)
                 || string.IsNullOrWhiteSpace(dto.Email)
                 || string.IsNullOrWhiteSpace(dto.Password))
                 return BadRequest(new { message = "Tous les champs sont requis" });

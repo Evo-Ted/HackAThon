@@ -15,11 +15,8 @@ namespace BrainHack.API.Models
         [Column("password_hash")]
         public string PasswordHash { get; set; } = string.Empty;
 
-        [Column("first_name")]
-        public string FirstName { get; set; } = string.Empty;
-
-        [Column("last_name")]
-        public string LastName { get; set; } = string.Empty;
+        [Column("pseudo")]
+        public string Pseudo { get; set; } = string.Empty;
 
         [Column("role")]
         public string Role { get; set; } = "student";

@@ -42,8 +42,7 @@ namespace BrainHack.API.Services
             return response.Models.Select(u => new LeaderboardUserDTO
             {
                 Id = u.Id,
-                FirstName = u.FirstName,
-                LastName = u.LastName,
+                Pseudo = u.Pseudo,
                 AvatarUrl = u.AvatarUrl,
                 TotalXp = u.TotalXp
             }).ToList();

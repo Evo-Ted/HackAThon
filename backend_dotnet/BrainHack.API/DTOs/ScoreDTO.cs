@@ -21,8 +21,7 @@ namespace BrainHack.API.DTOs
     public class LeaderboardUserDTO
     {
         public string Id { get; set; } = string.Empty;
-        public string FirstName { get; set; } = string.Empty;
-        public string LastName { get; set; } = string.Empty;
+        public string Pseudo { get; set; } = string.Empty;
         public string? AvatarUrl { get; set; }
         public int TotalXp { get; set; }
     }

@@ -36,8 +36,7 @@ namespace BrainHack.API.Services
                 Id = Guid.NewGuid().ToString(),
                 Email = normalizedEmail,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
-                FirstName = dto.FirstName.Trim(),
-                LastName = dto.LastName.Trim(),
+                Pseudo = dto.Pseudo.Trim(),
                 Role = normalizedRole,
                 TotalXp = 0,
                 CreatedAt = DateTime.UtcNow
@@ -51,8 +50,7 @@ namespace BrainHack.API.Services
             {
                 Token = GenerateToken(created),
                 Id = created.Id,
-                FirstName = created.FirstName,
-                LastName = created.LastName,
+                Pseudo = created.Pseudo,
                 Email = created.Email,
                 Role = created.Role,
                 AvatarUrl = created.AvatarUrl,
@@ -70,19 +68,16 @@ namespace BrainHack.API.Services
                 .Get();
 
             var user = response.Models.FirstOrDefault();
-            if (user == null)
-                return null;
+            if (user == null) return null;
 
             var passwordOk = BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash);
-            if (!passwordOk)
-                return null;
+            if (!passwordOk) return null;
 
             return new AuthResponseDTO
             {
                 Token = GenerateToken(user),
                 Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
+                Pseudo = user.Pseudo,
                 Email = user.Email,
                 Role = user.Role,
                 AvatarUrl = user.AvatarUrl,
@@ -107,20 +102,15 @@ namespace BrainHack.API.Services
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Role, user.Role),
-                new Claim(ClaimTypes.GivenName, user.FirstName),
-                new Claim(ClaimTypes.Surname, user.LastName)
+                new Claim("pseudo", user.Pseudo)
             };
 
             var token = new JwtSecurityToken(
                 issuer: _config["Jwt:Issuer"],
                 audience: _config["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddDays(
-                    int.Parse(_config["Jwt:ExpiryInDays"]!)
-                ),
-                signingCredentials: new SigningCredentials(
-                    key, SecurityAlgorithms.HmacSha256
-                )
+                expires: DateTime.UtcNow.AddDays(int.Parse(_config["Jwt:ExpiryInDays"]!)),
+                signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);

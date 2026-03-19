@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ev11C+J9Jd4=",
+  "dgSpecHash": "2hvNSqByMHU=",
   "success": true,
-  "projectFilePath": "D:\\kelvya\\2025-2026\\HackAThon\\backend_dotnet\\BrainHack.API\\BrainHack.API.csproj",
+  "projectFilePath": "D:\\kelvya\\2025-2026\\HackAThon\\backend_dotnet\\BRainHack.API\\BrainHack.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kelvya\\.nuget\\packages\\bcrypt.net-next\\4.1.0\\bcrypt.net-next.4.1.0.nupkg.sha512",
     "C:\\Users\\kelvya\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\10.0.5\\microsoft.aspnetcore.authentication.jwtbearer.10.0.5.nupkg.sha512",
