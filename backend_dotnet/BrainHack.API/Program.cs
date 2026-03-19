@@ -27,6 +27,8 @@ builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<GameService>();
 builder.Services.AddScoped<ArticleService>();
+builder.Services.AddScoped<LikeService>();
+builder.Services.AddScoped<CommentService>();
 
 // JWT Authentication
 var jwtSecret = builder.Configuration["Jwt:Secret"]!;
