@@ -26,6 +26,7 @@ builder.Services.AddSingleton(supabaseClient);
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<GameService>();
+builder.Services.AddScoped<ArticleService>();
 
 // JWT Authentication
 var jwtSecret = builder.Configuration["Jwt:Secret"]!;
