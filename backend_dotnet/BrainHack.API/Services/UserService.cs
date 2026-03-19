@@ -1,6 +1,6 @@
 using BrainHack.API.DTOs;
 using BrainHack.API.Models;
-using Supabase.Postgrest.Constants;
+using static Supabase.Postgrest.Constants;
 
 namespace BrainHack.API.Services
 {
