@@ -1,5 +1,17 @@
 const API_BASE = 'http://localhost:5282';
 
+const DEFAULT_AVATAR_POOL = [
+    '../assets/greenAvatar.png',
+    '../assets/blueAvatar.png',
+    '../assets/redAvatar.png',
+    '../assets/yellowAvatar.png',
+    '../assets/purpleAvatar.png',
+    '../assets/orangeAvatar.png',
+    '../assets/cyanAvatar.png',
+    '../assets/pinkAvatar.png',
+    '../assets/limeAvatar.png'
+];
+
 // ─── Helpers API ─────────────────────────────────────────────────────────────
 
 async function apiPost(endpoint, body) {
@@ -19,21 +31,17 @@ function getToken() {
 }
 
 function setSession(apiResponse) {
-    // On stocke uniquement le token + les infos non sensibles
     localStorage.setItem('brainhack_token', apiResponse.token);
     localStorage.setItem('isLoggedIn', 'true');
-
     const user = {
         id: apiResponse.id,
-        name: apiResponse.firstName + ' ' + apiResponse.lastName,
-        firstName: apiResponse.firstName,
-        lastName: apiResponse.lastName,
+        name: apiResponse.pseudo,
+        pseudo: apiResponse.pseudo,
         email: apiResponse.email,
         role: apiResponse.role,
-        avatarUrl: apiResponse.avatarUrl,
+        avatarUrl: apiResponse.avatarUrl || pickRandomAvatarUrl(),
         totalXp: apiResponse.totalXp
     };
-
     localStorage.setItem('currentUser', JSON.stringify(user));
     localStorage.setItem('userData', JSON.stringify(user));
     return user;
@@ -57,11 +65,23 @@ function getStoredUserData() {
     }
 }
 
+function pickRandomAvatarUrl() {
+    return DEFAULT_AVATAR_POOL[Math.floor(Math.random() * DEFAULT_AVATAR_POOL.length)];
+}
+
+function ensureUserHasAvatar(userData) {
+    if (!userData || typeof userData !== 'object') return userData;
+    if (typeof userData.avatarUrl === 'string' && userData.avatarUrl.trim()) return userData;
+    const updatedUser = { ...userData, avatarUrl: pickRandomAvatarUrl() };
+    localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+    localStorage.setItem('userData', JSON.stringify(updatedUser));
+    return updatedUser;
+}
+
 // ─── DOM prêt ─────────────────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    // Éléments DOM
     const profileSection = document.getElementById('profileSection');
     const authSection = document.getElementById('authSection');
     const loginForm = document.getElementById('loginForm');
@@ -70,8 +90,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const showRegisterQuestionBtn = document.getElementById('showRegisterQuestion');
     const logoutBtn = document.getElementById('logoutBtn');
     const logoutBtnProfessor = document.getElementById('logoutBtnProfessor');
-    const loginFormElement = document.getElementById('loginFormElement');
-    const registerFormElement = document.getElementById('registerFormElement');
     const professorSection = document.getElementById('professorSection');
     const studentDashboard = document.getElementById('studentDashboard');
     const profClassNameInput = document.getElementById('profClassNameInput');
@@ -143,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
         certificationLink.addEventListener('click', function (event) {
             if (certificationLink.classList.contains('is-disabled')) {
                 event.preventDefault();
-                showNotification('Atteins 100% pour debloquer la certification.', 'info');
+                showNotification('Atteins 100% pour débloquer la certification.', 'info');
             }
         });
     }
@@ -155,11 +173,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // ── Auth ──────────────────────────────────────────────────────────────────
 
     function checkAuthStatus() {
-        const userData = getStoredUserData();
+        let userData = getStoredUserData();
         const mode = new URLSearchParams(window.location.search).get('mode');
 
         if (onAccountPage) {
             if (userData && getToken()) {
+                userData = ensureUserHasAvatar(userData);
                 showProfile(userData);
             } else {
                 window.location.href = AUTH_PAGE + '?mode=login';
@@ -173,7 +192,6 @@ document.addEventListener('DOMContentLoaded', function () {
             else showRegister();
         }
     }
-
 
     function logout() {
         clearSession();
@@ -202,10 +220,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const userRoleElement = document.querySelector('.user-role');
         const pseudoTextElement = document.querySelector('.pseudo-text');
 
-        if (userNameElement) userNameElement.textContent = userData.firstName || userData.name || '';
+        if (userNameElement) userNameElement.textContent = userData.pseudo || userData.name || '';
         if (userRoleElement) userRoleElement.textContent = 'Élève';
-        if (pseudoTextElement) pseudoTextElement.textContent = userData.email || '';
+        if (pseudoTextElement) pseudoTextElement.textContent = userData.pseudo || '';
 
+        renderProfileAvatar(userData);
         updateMedals(userData.medals || []);
         renderStudentDashboard(userData);
     }
@@ -232,6 +251,33 @@ document.addEventListener('DOMContentLoaded', function () {
             showLoginBtn.classList.remove('btn-primary');
             showLoginBtn.classList.add('btn-outline');
         }
+    }
+
+    // ── Avatar ────────────────────────────────────────────────────────────────
+
+    function renderProfileAvatar(userData) {
+        const avatarCircle = document.querySelector('.avatar-circle');
+        if (!avatarCircle) return;
+
+        const avatarUrl = typeof userData.avatarUrl === 'string' ? userData.avatarUrl.trim() : '';
+        const icon = avatarCircle.querySelector('svg');
+        let image = avatarCircle.querySelector('.profile-avatar-img');
+
+        if (!avatarUrl) {
+            if (image) image.remove();
+            if (icon) icon.style.display = 'block';
+            return;
+        }
+
+        if (!image) {
+            image = document.createElement('img');
+            image.className = 'profile-avatar-img';
+            image.alt = 'Avatar utilisateur';
+            avatarCircle.appendChild(image);
+        }
+
+        image.src = avatarUrl;
+        if (icon) icon.style.display = 'none';
     }
 
     // ── Dashboard élève ───────────────────────────────────────────────────────
@@ -315,7 +361,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateProfessorDisplay(userData) {
         const professorNameElement = document.querySelector('.prof-name');
         const professorEmailElement = document.querySelector('.professor-email');
-        if (professorNameElement) professorNameElement.textContent = userData.firstName || userData.name || 'Professeur';
+        if (professorNameElement) professorNameElement.textContent = userData.pseudo || userData.name || 'Professeur';
         if (professorEmailElement) professorEmailElement.textContent = userData.email || '';
         renderProfessorWorkspace(userData);
     }
@@ -397,9 +443,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const activeClass = state.teacherState.classes.find(cls => cls.id === state.teacherState.activeClassId);
         if (!activeClass) { showNotification('Crée d\'abord une classe.', 'info'); return; }
 
-        // Clé basée sur l'email (plus de liste users locale)
         const studentKey = `email:${identifier}`;
-
         if (!Array.isArray(activeClass.students)) activeClass.students = [];
         if (activeClass.students.includes(studentKey)) {
             showNotification('Cet élève est déjà dans la classe.', 'info'); return;
@@ -633,9 +677,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         const allowedArticles = Array.isArray(activeClass.allowedArticleIds) ? activeClass.allowedArticleIds : [];
-
         const ranking = students.map(({ key, email }) => {
-            const fakeUser = { email: email };
+            const fakeUser = { email };
             const progress = getStudentProgress(fakeUser);
             const readArticles = Array.isArray(progress.articlesRead) ? progress.articlesRead : [];
             const normalizedReadSet = new Set(readArticles.map(normalizeArticleId).filter(Boolean));
@@ -643,9 +686,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const totalArticles = Math.max(allowedArticles.length, 1);
             const gamesPlayed = Number(progress.gamesPlayed || 0);
             const points = Number(progress.totalPoints || 0);
-            const articleWeight = (readCount / totalArticles) * 60;
-            const gamesWeight = (Math.min(gamesPlayed, 10) / 10) * 40;
-            const completion = Math.round(Math.min(100, articleWeight + gamesWeight));
+            const completion = Math.round(Math.min(100, (readCount / totalArticles) * 60 + (Math.min(gamesPlayed, 10) / 10) * 40));
             return { email, points, readCount, totalArticles, completion };
         }).sort((a, b) => b.completion !== a.completion ? b.completion - a.completion : b.points - a.points);
 
@@ -790,7 +831,7 @@ document.addEventListener('DOMContentLoaded', function () {
             completion: Number(payload.completion || 0),
             totalPoints: Number(payload.totalPoints || 0),
             generatedAt: payload.generatedAt || new Date().toISOString(),
-            displayName: userData.firstName || userData.name || userData.email || 'Élève'
+            displayName: userData.pseudo || userData.name || userData.email || 'Élève'
         };
         localStorage.setItem(CERTIFICATION_KEY, JSON.stringify(map));
     }
