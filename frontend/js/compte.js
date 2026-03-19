@@ -27,11 +27,12 @@ async function apiPost(endpoint, body) {
 // ─── Session JWT ─────────────────────────────────────────────────────────────
 
 function getToken() {
-    return localStorage.getItem('brainhack_token');
+    return localStorage.getItem('brainhack_token') || localStorage.getItem('token');
 }
 
 function setSession(apiResponse) {
     localStorage.setItem('brainhack_token', apiResponse.token);
+    localStorage.setItem('token', apiResponse.token);
     localStorage.setItem('isLoggedIn', 'true');
     const user = {
         id: apiResponse.id,
@@ -49,6 +50,7 @@ function setSession(apiResponse) {
 
 function clearSession() {
     localStorage.removeItem('brainhack_token');
+    localStorage.removeItem('token');
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('currentUser');
     localStorage.removeItem('userData');

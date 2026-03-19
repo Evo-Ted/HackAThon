@@ -32,7 +32,7 @@
     }
 
     function getAuthToken() {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('token') || localStorage.getItem('brainhack_token');
         if (!token || !token.trim()) {
             return null;
         }
@@ -251,6 +251,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 localStorage.removeItem('isLoggedIn');
                 localStorage.removeItem('currentUser');
                 localStorage.removeItem('userData');
+                localStorage.removeItem('token');
+                localStorage.removeItem('brainhack_token');
                 window.location.href = getHeaderAccountPath().replace('compte.html', 'authentification.html?mode=login');
             });
         }
