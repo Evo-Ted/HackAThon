@@ -29,6 +29,7 @@ builder.Services.AddScoped<GameService>();
 builder.Services.AddScoped<ArticleService>();
 builder.Services.AddScoped<LikeService>();
 builder.Services.AddScoped<CommentService>();
+builder.Services.AddHttpClient();
 
 // JWT Authentication
 var jwtSecret = builder.Configuration["Jwt:Secret"]!;
@@ -58,7 +59,15 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins(
             "http://localhost:5500",
-            "http://127.0.0.1:5500"
+            "http://127.0.0.1:5500",
+            "http://localhost:5501",
+            "http://127.0.0.1:5501",
+            "http://localhost:5173",
+            "http://127.0.0.1:5173",
+            "http://localhost:3000",
+            "http://127.0.0.1:3000",
+            "http://localhost:8000",
+            "http://127.0.0.1:8000"
         )
         .AllowAnyHeader()
         .AllowAnyMethod();

@@ -3,6 +3,7 @@ namespace BrainHack.API.DTOs
     public class SaveGameSessionDTO
     {
         public string MinigameId { get; set; } = string.Empty;
+        public string? MinigameKey { get; set; }
         public int Score { get; set; }
         public int XpEarned { get; set; }
     }
