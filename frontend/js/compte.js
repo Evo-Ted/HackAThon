@@ -185,6 +185,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const authSection = document.getElementById('authSection');
     const loginForm = document.getElementById('loginForm');
     const registerForm = document.getElementById('registerForm');
+    const authLoginNavLink = document.querySelector('.nav-actions a[href*="mode=login"]');
+    const authRegisterNavLink = document.querySelector('.nav-actions a[href*="mode=register"]');
     const showLoginBtn = document.getElementById('showLogin');
     const showRegisterQuestionBtn = document.getElementById('showRegisterQuestion');
     const logoutBtn = document.getElementById('logoutBtn');
@@ -246,6 +248,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (showLoginBtn) showLoginBtn.addEventListener('click', showLogin);
     if (showRegisterQuestionBtn) showRegisterQuestionBtn.addEventListener('click', showRegister);
+    if (onAuthPage && authLoginNavLink) {
+        authLoginNavLink.addEventListener('click', function (event) {
+            event.preventDefault();
+            showAuth('login');
+            history.replaceState({}, '', 'authentification.html?mode=login');
+        });
+    }
+    if (onAuthPage && authRegisterNavLink) {
+        authRegisterNavLink.addEventListener('click', function (event) {
+            event.preventDefault();
+            showAuth('register');
+            history.replaceState({}, '', 'authentification.html?mode=register');
+        });
+    }
     if (logoutBtn) logoutBtn.addEventListener('click', logout);
     if (logoutBtnProfessor) logoutBtnProfessor.addEventListener('click', logout);
     if (profCreateClassBtn) profCreateClassBtn.addEventListener('click', createProfessorClass);
@@ -286,7 +302,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function checkAuthStatus() {
         let userData = getStoredUserData();
-        const mode = new URLSearchParams(window.location.search).get('mode');
+        const rawMode = new URLSearchParams(window.location.search).get('mode');
+        const mode = String(rawMode || 'register').trim().toLowerCase();
 
         if (onAccountPage) {
             if (userData && getToken()) {
@@ -300,9 +317,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (onAuthPage) {
-            showAuth();
-            if (mode === 'login') showLogin();
-            else showRegister();
+            showAuth(mode === 'login' ? 'login' : 'register');
         }
     }
 
@@ -371,10 +386,11 @@ document.addEventListener('DOMContentLoaded', function () {
         renderStudentDashboard(userData);
     }
 
-    function showAuth() {
+    function showAuth(mode = 'register') {
         if (profileSection) profileSection.classList.add('hidden');
         if (authSection) authSection.classList.remove('hidden');
-        showRegister();
+        if (mode === 'login') showLogin();
+        else showRegister();
     }
 
     function showLogin() {

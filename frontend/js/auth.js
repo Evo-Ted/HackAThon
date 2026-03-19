@@ -15,6 +15,48 @@ function pickRandomAvatarUrl() {
     return DEFAULT_AVATAR_POOL[Math.floor(Math.random() * DEFAULT_AVATAR_POOL.length)];
 }
 
+function setAuthMode(mode) {
+    const registerForm = document.getElementById('registerForm');
+    const loginForm = document.getElementById('loginForm');
+
+    if (!registerForm || !loginForm) return;
+
+    if (mode === 'login') {
+        registerForm.classList.add('hidden');
+        loginForm.classList.remove('hidden');
+        return;
+    }
+
+    loginForm.classList.add('hidden');
+    registerForm.classList.remove('hidden');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const mode = String(new URLSearchParams(window.location.search).get('mode') || 'register')
+        .trim()
+        .toLowerCase();
+    setAuthMode(mode === 'login' ? 'login' : 'register');
+
+    const navLoginLink = document.querySelector('.nav-actions a[href*="mode=login"]');
+    const navRegisterLink = document.querySelector('.nav-actions a[href*="mode=register"]');
+
+    if (navLoginLink) {
+        navLoginLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            setAuthMode('login');
+            history.replaceState({}, '', 'authentification.html?mode=login');
+        });
+    }
+
+    if (navRegisterLink) {
+        navRegisterLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            setAuthMode('register');
+            history.replaceState({}, '', 'authentification.html?mode=register');
+        });
+    }
+});
+
 // Basculer entre inscription et connexion
 document.getElementById('showLogin')?.addEventListener('click', () => {
     document.getElementById('registerForm').classList.add('hidden');
