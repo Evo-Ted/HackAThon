@@ -25,12 +25,8 @@ namespace BrainHack.API.Services
                 return null;
             }
 
-            var minigameResponse = await _supabase
-                .From<MiniGame>()
-                .Where(m => m.Id == dto.MinigameId)
-                .Get();
-
-            if (!minigameResponse.Models.Any())
+            var minigameId = await ResolveMinigameId(dto);
+            if (string.IsNullOrWhiteSpace(minigameId))
             {
                 return null;
             }
@@ -39,7 +35,7 @@ namespace BrainHack.API.Services
             {
                 Id = Guid.NewGuid().ToString(),
                 UserId = userId,
-                MinigameId = dto.MinigameId,
+                MinigameId = minigameId,
                 Score = dto.Score,
                 XpEarned = dto.XpEarned,
                 CompletedAt = DateTime.UtcNow
@@ -70,6 +66,58 @@ namespace BrainHack.API.Services
                 CompletedAt = inserted.CompletedAt,
                 UpdatedTotalXp = updatedUser.TotalXp
             };
+        }
+
+        private async Task<string?> ResolveMinigameId(SaveGameSessionDTO dto)
+        {
+            var minigameIdCandidate = (dto.MinigameId ?? string.Empty).Trim();
+            if (!string.IsNullOrWhiteSpace(minigameIdCandidate))
+            {
+                var byId = await _supabase
+                    .From<MiniGame>()
+                    .Where(m => m.Id == minigameIdCandidate)
+                    .Get();
+
+                var existingById = byId.Models.FirstOrDefault();
+                if (existingById != null)
+                {
+                    return existingById.Id;
+                }
+            }
+
+            var minigameKey = (dto.MinigameKey ?? string.Empty).Trim();
+            if (string.IsNullOrWhiteSpace(minigameKey) && !Guid.TryParse(minigameIdCandidate, out _))
+            {
+                minigameKey = minigameIdCandidate;
+            }
+
+            if (string.IsNullOrWhiteSpace(minigameKey))
+            {
+                return null;
+            }
+
+            var byName = await _supabase
+                .From<MiniGame>()
+                .Where(m => m.Name == minigameKey)
+                .Get();
+
+            var existingByName = byName.Models.FirstOrDefault();
+            if (existingByName != null)
+            {
+                return existingByName.Id;
+            }
+
+            var newMiniGame = new MiniGame
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = minigameKey,
+                Description = $"Auto-created minigame entry for {minigameKey}",
+                MaxXpPossible = Math.Max(dto.XpEarned, 100)
+            };
+
+            var insertMiniGame = await _supabase.From<MiniGame>().Insert(newMiniGame);
+            var createdMiniGame = insertMiniGame.Models.FirstOrDefault();
+            return createdMiniGame?.Id;
         }
     }
 }

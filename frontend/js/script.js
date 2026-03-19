@@ -1,6 +1,7 @@
 // Suivi centralise de la progression eleve (articles + mini-jeux).
 (function () {
     const STORAGE_KEY = 'brainhack_student_progress_v1';
+    const GAME_API_BASE_URL = localStorage.getItem('brainhack_api_url') || 'http://localhost:5282/api';
 
     function getStorage() {
         try {
@@ -22,10 +23,70 @@
             if (currentUserRaw) return JSON.parse(currentUserRaw);
             const userDataRaw = localStorage.getItem('userData');
             if (userDataRaw) return JSON.parse(userDataRaw);
+            const userRaw = localStorage.getItem('user');
+            if (userRaw) return JSON.parse(userRaw);
         } catch (error) {
             return null;
         }
         return null;
+    }
+
+    function getAuthToken() {
+        const token = localStorage.getItem('token');
+        if (!token || !token.trim()) {
+            return null;
+        }
+        return token.trim();
+    }
+
+    function isAuthenticatedAccount(user) {
+        if (!user || typeof user !== 'object') {
+            return false;
+        }
+
+        const hasIdentity = Boolean(user.id || user.idCompte || user.email || user.pseudo);
+        return hasIdentity && Boolean(getAuthToken());
+    }
+
+    function computeXpEarned(score, maxScore) {
+        const safeScore = Math.max(0, Number(score) || 0);
+        const safeMax = Math.max(0, Number(maxScore) || 0);
+        if (safeMax <= 0) {
+            return Math.min(100, safeScore);
+        }
+
+        const ratio = Math.min(1, safeScore / safeMax);
+        return Math.max(0, Math.round(ratio * 100));
+    }
+
+    async function sendMiniGameScoreToApi(gameKey, score, maxScore, user) {
+        if (!isAuthenticatedAccount(user) || !gameKey) {
+            return;
+        }
+
+        const token = getAuthToken();
+        if (!token) {
+            return;
+        }
+
+        const payload = {
+            minigameKey: String(gameKey),
+            score: Math.max(0, Number(score) || 0),
+            xpEarned: computeXpEarned(score, maxScore)
+        };
+
+        try {
+            await fetch(`${GAME_API_BASE_URL}/game/session`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(payload)
+            });
+        } catch (_error) {
+            // Le tracking local reste la source de secours si l'API est indisponible.
+        }
     }
 
     function getUserKey(user) {
@@ -91,6 +152,8 @@
         state.progress.totalPoints = (state.progress.totalPoints || 0) + numericScore;
         state.progress.updatedAt = new Date().toISOString();
         setStorage(state.storage);
+
+        void sendMiniGameScoreToApi(gameKey, numericScore, numericMax, user);
     }
 
     function getProgressForUser(user) {

@@ -27,9 +27,9 @@ namespace BrainHack.API.Controllers
                 return Unauthorized(new { message = "Utilisateur non authentifie" });
             }
 
-            if (string.IsNullOrWhiteSpace(dto.MinigameId))
+            if (string.IsNullOrWhiteSpace(dto.MinigameId) && string.IsNullOrWhiteSpace(dto.MinigameKey))
             {
-                return BadRequest(new { message = "minigame_id requis" });
+                return BadRequest(new { message = "minigame_id ou minigame_key requis" });
             }
 
             var saved = await _gameService.SaveGameSession(userId, dto);
