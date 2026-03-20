@@ -1,4 +1,5 @@
-const API_URL = 'http://localhost:5282/api';
+const API_BASE_CANDIDATES = buildApiBaseCandidates();
+ 
 
 const DEFAULT_AVATAR_POOL = [
     '../assets/greenAvatar.png',
