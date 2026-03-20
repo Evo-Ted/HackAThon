@@ -119,11 +119,14 @@ namespace BrainHack.API.Services
             }
 
             var supabaseUrl = _config["Supabase:Url"]?.TrimEnd('/');
-            var supabaseKey = _config["Supabase:ServiceRoleKey"] ?? _config["Supabase:AnonKey"];
+            var supabaseKey = _config["Supabase:ServiceRoleKey"];
             var bucketName = _config["Supabase:AvatarBucket"] ?? "avatars";
             if (string.IsNullOrWhiteSpace(supabaseUrl) || string.IsNullOrWhiteSpace(supabaseKey))
             {
-                return new UploadAvatarResult { Error = "Configuration Supabase manquante (Url/cle)." };
+                return new UploadAvatarResult
+                {
+                    Error = "Configuration Supabase manquante: Supabase:ServiceRoleKey requise pour uploader des avatars."
+                };
             }
 
             var objectPath = $"users/{userId}/avatar_{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}{extension}";
@@ -143,6 +146,14 @@ namespace BrainHack.API.Services
 
             if (!success)
             {
+                if (!string.IsNullOrWhiteSpace(uploadError) && uploadError.Contains("HTTP 403", StringComparison.OrdinalIgnoreCase))
+                {
+                    return new UploadAvatarResult
+                    {
+                        Error = "Upload refuse par Supabase (RLS). Verifie la ServiceRoleKey backend ou la policy storage.objects du bucket avatars."
+                    };
+                }
+
                 return new UploadAvatarResult { Error = uploadError ?? "Echec upload bucket avatars." };
             }
 
